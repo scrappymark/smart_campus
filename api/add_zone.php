@@ -6,16 +6,13 @@ header('Content-Type: application/json');
 $data = json_decode(file_get_contents('php://input'), true);
 
 try {
-    $stmt = $pdo->prepare("INSERT INTO buildings (name, code, department, lat, lng, category, description, icon) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $pdo->prepare("INSERT INTO zones (name, type, color, description, coordinates_json) VALUES (?, ?, ?, ?, ?)");
     $stmt->execute([
         $data['name'],
-        $data['code'] ?? null,
-        $data['department'] ?? null,
-        $data['lat'],
-        $data['lng'],
-        $data['category'],
-        $data['description'] ?? null,
-        $data['icon'] ?? null
+        $data['type'],
+        $data['color'],
+        $data['description'],
+        json_encode($data['coordinates'])
     ]);
     
     echo json_encode(['success' => true, 'id' => $pdo->lastInsertId()]);

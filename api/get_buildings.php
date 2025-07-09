@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 
 try {
     // Fetch all buildings from database
-    $stmt = $pdo->query("SELECT id, name, lat, lng, category, icon FROM buildings");
+    $stmt = $pdo->query("SELECT id, name, code, department, lat, lng, category, description, icon FROM buildings");
     $buildings = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     // Convert to GeoJSON format
@@ -16,7 +16,10 @@ try {
             'properties' => [
                 'id' => $building['id'],
                 'name' => $building['name'],
+                'code' => $building['code'],
+                'department' => $building['department'],
                 'category' => $building['category'],
+                'description' => $building['description'],
                 'icon' => $building['icon'],
                 'popupContent' => "<b>{$building['name']}</b><br>{$building['category']}"
             ],

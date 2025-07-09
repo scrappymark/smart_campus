@@ -6,10 +6,35 @@ USE campus_nav;
 CREATE TABLE IF NOT EXISTS buildings (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
+    code VARCHAR(20),
+    department VARCHAR(100),
     lat DOUBLE NOT NULL,
     lng DOUBLE NOT NULL,
     category VARCHAR(50) NOT NULL,
+    description TEXT,
     icon VARCHAR(100),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Roads table
+CREATE TABLE IF NOT EXISTS roads (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    width INT DEFAULT 3,
+    description TEXT,
+    coordinates_json TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Zones table
+CREATE TABLE IF NOT EXISTS zones (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    color VARCHAR(7) DEFAULT '#fd7e14',
+    description TEXT,
+    coordinates_json TEXT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -54,7 +79,6 @@ CREATE TABLE IF NOT EXISTS users (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (role) REFERENCES roles(id) ON DELETE SET NULL
 );
-
 
 CREATE TABLE IF NOT EXISTS roles (
     id INT PRIMARY KEY AUTO_INCREMENT,
